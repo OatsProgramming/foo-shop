@@ -40,7 +40,7 @@ export default function Form({ method }: {
                 const result = await signIn(
                     'credentials', 
                     // Sign in with new credentials if given
-                    method !== 'GET' ? newInfo : user
+                    method === 'PATCH' ? newInfo : user
                 )
                 if (!result) notify("Invalid log in. Please try again.", 'error')
             } else {
