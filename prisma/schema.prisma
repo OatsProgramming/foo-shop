@@ -62,9 +62,18 @@ model VerificationToken {
 }
 
 model Item {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  imageUrl    String
-  price       String
+  price       Int
+  category    String
+  colors      Color[]
+}
+
+model Color {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  url     String
+  itemsId String @db.ObjectId
+  Item    Item   @relation(fields: [itemsId], references: [id])
 }
