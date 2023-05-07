@@ -10,9 +10,14 @@ export async function GET(req: Request, { params: { slug } }: {
         // Find the item(s)
         const items = await prismadb.item.findMany({
             where: {
-                category: slug,
+                // Make it case insensitive to get all possible searches related to query
+                category: {
+                    equals: slug,
+                    mode: 'insensitive',
+                },
                 title: {
-                    contains: search ?? undefined
+                    contains: search ?? undefined,
+                    mode: 'insensitive',
                 }
             }
         })

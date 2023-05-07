@@ -10,7 +10,11 @@ export async function GET(req: Request) {
         // undefined not empty string: '' will return none
         const items = await prismadb.item.findMany({
             where: {
-                title: search ?? undefined
+                // Make it case insensitive to get all possible searches related to query
+                title: {
+                    contains: search ?? undefined,
+                    mode: 'insensitive',
+                }
             }
         })
 
