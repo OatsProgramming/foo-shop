@@ -61,19 +61,13 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+// Price is set to string as there is no DECIMAL support yet for mongodb
+// Don't forget to parseFloat when getting price
 model Item {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  price       Int
+  price       String
   category    String
-  colors      Color[]
-}
-
-model Color {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  url     String
-  itemsId String @db.ObjectId
-  Item    Item   @relation(fields: [itemsId], references: [id])
+  colors      Json
 }

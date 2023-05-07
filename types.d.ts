@@ -27,12 +27,14 @@ type TextFieldProp = {
 
 type HTTP = 'POST' | 'DELETE' | 'PATCH' | 'GET'
 
+type Category = 'Headwear' | 'Pets' | 'Hoodies' | 'Shirts' | 'Accessories'
+
 type Item = {
     id: string,
     title: string,
     description: string,
     price: number,
-    category: string,
+    category: Category,
     colors: {
         id: string,
         name: string,
