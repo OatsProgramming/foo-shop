@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
-import Google from 'next-auth/providers/google'
-import Github from 'next-auth/providers/github'
+// import Google from 'next-auth/providers/google'
+// import Github from 'next-auth/providers/github'
 import Credentials from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prismadb from '@/lib/prismadb'
@@ -9,14 +9,15 @@ import { compare } from 'bcrypt'
 
 export const authOptions: NextAuthOptions = {
     providers: [
-        Google({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        }),
-        Github({
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET!
-        }),
+        // Other providers give errors still
+        // Google({
+        //     clientId: process.env.GOOGLE_CLIENT_ID!,
+        //     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        // }),
+        // Github({
+        //     clientId: process.env.GITHUB_CLIENT_ID!,
+        //     clientSecret: process.env.GITHUB_CLIENT_SECRET!
+        // }),
         Credentials({
             name: 'Credentials',
             credentials: {
