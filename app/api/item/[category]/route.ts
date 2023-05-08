@@ -1,9 +1,9 @@
 import prismadb from "@/lib/prismadb";
 
-export async function GET(req: Request, { params: { slug } }: {
-    params: { slug: string }
+export async function GET(req: Request, { params: { category } }: {
+    params: { category: Category }
 }) {
-    // Extract searchParams (/item/[slug]?search=INSERT%20VALUE)
+    // Extract searchParams (/item/[category]?search=INSERT%20VALUE)
     const { searchParams } = new URL(req.url)
     const search = searchParams.get('search') 
     try {
@@ -12,7 +12,7 @@ export async function GET(req: Request, { params: { slug } }: {
             where: {
                 // Make it case insensitive to get all possible searches related to query
                 category: {
-                    equals: slug,
+                    equals: category,
                     mode: 'insensitive',
                 },
                 title: {

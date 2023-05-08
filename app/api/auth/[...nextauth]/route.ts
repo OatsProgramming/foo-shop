@@ -60,9 +60,13 @@ export const authOptions: NextAuthOptions = {
                     if (!user) return null
                     else if (!await compare(credentials.password, user.hashedPassword)) return null
 
+                    // Only return necessary info for UI
+                    // JWT can be intercepted
                     return {
-                        ...user,
-                        username: user.name
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        itemIds: user.itemIds,
                     }
 
                 } catch (err) {
@@ -74,12 +78,15 @@ export const authOptions: NextAuthOptions = {
     ],
     adapter: PrismaAdapter(prismadb),
     callbacks: {
+        // Add authOptions to getServerSession() 
+        // And strategy: 'jwt' to auth to make session storage work
         session: ({ session, token }) => {
             return {
                 ...session,
                 user: {
                     ...session.user,
-                    id: token.id
+                    id: token.id,
+                    itemIds: token.itemIds
                 }
             }
         },
@@ -87,23 +94,17 @@ export const authOptions: NextAuthOptions = {
             if (user) {
                 return {
                     ...token,
-                    id: user.id
+                    ...user,
                 }
             }
             return token
         }
     },
-    cookies: {
-        pkceCodeVerifier: {
-          name: "next-auth.pkce.code_verifier",
-          options: {
-            httpOnly: true,
-            sameSite: "none",
-            path: "/",
-            secure: true,
-          },
-        },
-      },
+    // Dont forget to add this to store session
+    // Weird as it's supposed to be default... 
+    session: {
+        strategy: 'jwt'
+    }
     // pages: {
     //     signIn: '/'
     // }
