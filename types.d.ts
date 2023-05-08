@@ -49,3 +49,12 @@ type ToastParams = {
     message: string,
     type: ToastType
 }
+
+type CartState = {
+    cart: string[]
+}
+type CartAction =  {
+    addToCart: (itemId: string) => void,
+    removeFromCart: (itemId: string) => void,
+    resetCart: () => void
+}

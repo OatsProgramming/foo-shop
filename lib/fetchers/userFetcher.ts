@@ -1,7 +1,6 @@
 import isEmail from "@/lib/isEmail";
-import notify from "../toasts/notify";
 
-export default async function userFetcher(method: HTTP, data: User | NewInfo, patchData?: User): Promise<ToastParams> {
+export default async function userFetcher(method: HTTP, data: (User & Partial<CartState>) | NewInfo, patchData?: User): Promise<ToastParams> {
     // Check for email validity
     if (!isEmail(data.email)) {
         return {

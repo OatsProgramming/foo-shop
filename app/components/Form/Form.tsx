@@ -7,10 +7,14 @@ import ToastContainer from '@/lib/toasts/ToastContainer'
 import userFetcher from "@/lib/fetchers/userFetcher";
 import { signIn, signOut } from 'next-auth/react'
 import notify from "@/lib/toasts/notify";
+import useCart from "@/lib/useCart";
 
 export default function Form({ method }: {
     method: HTTP
 }) {
+    // Just in case if user already has something in the cart and THEN wanted to sign up
+    const cart = useCart((state) => state.cart)
+
     const [user, setUser] = useState({} as User)
     const [newInfo, setNewInfo] = useState({} as User)
        
@@ -36,8 +40,13 @@ export default function Form({ method }: {
             if (method !== 'DELETE') {
                 // Check to see if user is "writing" data
                 if ((method !== 'GET')) {
-                    const res = await userFetcher(method, user, newInfo)
+                    // Create user
+                    const res = await userFetcher(method, {...user, cart}, newInfo)
+
+                    // Let the user know the status
                     notify(res.message, res.type)
+
+                    // Prevent accidental signIn
                     if (res.type !== 'success') return
                 }
 
