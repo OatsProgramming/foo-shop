@@ -42,3 +42,10 @@ type Item = {
         itemsId: string,
     } 
 }
+
+type ToastType = 'info' | 'success' | 'warn' | 'error' | ''
+
+type ToastParams = {
+    message: string,
+    type: ToastType
+}

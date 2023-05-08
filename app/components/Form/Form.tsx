@@ -35,7 +35,11 @@ export default function Form({ method }: {
         try {
             if (method !== 'DELETE') {
                 // Check to see if user is "writing" data
-                if ((method !== 'GET')) await userFetcher(method, user, newInfo)
+                if ((method !== 'GET')) {
+                    const res = await userFetcher(method, user, newInfo)
+                    notify(res.message, res.type)
+                    if (res.type !== 'success') return
+                }
 
                 const result = await signIn(
                     'credentials', 

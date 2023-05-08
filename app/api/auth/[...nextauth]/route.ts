@@ -21,28 +21,27 @@ export const authOptions: NextAuthOptions = {
         Credentials({
             name: 'Credentials',
             credentials: {
-                name: {
+                username: {
                     name: 'username',
-                    label: 'Username',
+                    label: 'Username (optional)',
                     type: 'text',
                     placeholder: 'OatsProgramming'
                 },
                 email: {
                     name: 'email',
-                    label: 'Email',
+                    label: 'Email (optional)',
                     type: 'email',
                     placeholder: 'jackoatmeals@gmail.com'
                 },
                 password: {
                     name: 'password',
-                    label: 'password',
+                    label: 'Password',
                     type: 'password'
                 }
             },
             authorize: async (credentials) => {
                 // Check for any missing properties that would affect query
-                if ((!credentials?.name && !credentials?.email) || !credentials?.password) {
-                    console.log(credentials)
+                if ((!credentials?.username && !credentials?.email) || !credentials?.password) {
                     return null
                 }
 
@@ -52,7 +51,7 @@ export const authOptions: NextAuthOptions = {
                         where: {
                             OR: [
                                 { email: credentials.email },
-                                { name: credentials.name }
+                                { name: credentials.username }
                             ]
                         }
                     })
@@ -63,7 +62,7 @@ export const authOptions: NextAuthOptions = {
 
                     return {
                         ...user,
-                        name: user.name
+                        username: user.name
                     }
 
                 } catch (err) {

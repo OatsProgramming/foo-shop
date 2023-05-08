@@ -1,10 +1,13 @@
 import isEmail from "@/lib/isEmail";
 import notify from "../toasts/notify";
 
-export default async function userFetcher(method: HTTP, data: User | NewInfo, patchData?: User) {
+export default async function userFetcher(method: HTTP, data: User | NewInfo, patchData?: User): Promise<ToastParams> {
     // Check for email validity
     if (!isEmail(data.email)) {
-        return notify("Please enter a valid email", 'warn')
+        return {
+            message: "Please enter a valid email",
+            type: 'warn',
+        }
     }
 
     // For PATCH
@@ -12,9 +15,13 @@ export default async function userFetcher(method: HTTP, data: User | NewInfo, pa
     if ((patchData?.email || patchData?.password || patchData?.username) && method === 'PATCH') {
         // Check for email validity if existent
         if (patchData.email && !isEmail(patchData.email)) {
-            return notify("Please enter a valid email if updating the current one", 'warn')
+            return {
+                message: "Please enter a valid email if updating the current one",
+                type: 'warn',
+            }
         }
 
+        // Pack up the data all together
         data = {
             ...data,
             newEmail: patchData.email,
@@ -33,13 +40,22 @@ export default async function userFetcher(method: HTTP, data: User | NewInfo, pa
         })
 
         if (!res.ok) {
-            return notify(await res.text(), 'error')
+            return {
+                message: await res.text(),
+                type: 'error',
+            }
         }
 
-        return notify("Task complete", 'success')
+        return {
+            message: "Task Complete",
+            type: 'success',
+        }
 
     } catch (error) {
         const err = error as Error
-        return notify(err.message, 'error')
+        return {
+            message: err.message,
+            type: 'error'
+        }
     }
 }
