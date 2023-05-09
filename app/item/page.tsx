@@ -1,6 +1,10 @@
+import Items from "../components/Items/Items";
+
 export default function Page() {
 
     return (
-       <div></div>
+       <>
+        <Items />
+       </>
     )
 }

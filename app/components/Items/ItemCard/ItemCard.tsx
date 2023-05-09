@@ -6,13 +6,16 @@ import Image from "next/image"
 export default function ItemCard({ item }: {
     item: Item
 }) {
-    const cart = useCart()
-    const isInCart = cart.cart.find(id => item.id === id)
+    const { cart, addToCart, removeFromCart } = useCart()
+    const isInCart = cart.find(id => item.id === id)
 
     const colors = []
     for (let color in item.colors) {
         colors.push(color)
     }
+
+    console.log(cart)
+    
     return (
         <div>
             <h1>{item.title}</h1>
@@ -31,7 +34,7 @@ export default function ItemCard({ item }: {
                 </>
             ))}
             <button onClick={() => 
-                isInCart ? cart.removeFromCart(item.id) : cart.addToCart(item.id)
+                isInCart ? removeFromCart(item.id) : addToCart(item.id)
             }>
                 {isInCart ? 'Remove from cart' : 'Add to cart'}
             </button>

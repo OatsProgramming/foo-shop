@@ -7,7 +7,6 @@ export default function Page({ params: { category } } : {
 }) {
     return (
         <>
-            {/* @ts-expect-error Async Server Component */}
             <Items category={category}/>
         </>
     )

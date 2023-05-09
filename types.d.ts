@@ -65,3 +65,13 @@ type SessionData = {
         itemIds: string[]
     }
 }
+
+type QueryState = {
+    initialQuery: string
+    searchQuery: string
+}
+
+type QueryAction = {
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleSearch: () => void
+}

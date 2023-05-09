@@ -1,16 +1,33 @@
+'use client'
+
 import itemFetcher from "@/lib/fetchers/itemFetcher"
 import ItemCard from "./ItemCard/ItemCard"
+import useQuery from "@/lib/useQuery"
+import { useEffect, useState } from "react"
 
 // When using custom async server components, be sure to add this
 // {/* @ts-expect-error Async Server Component */}
 // NextJS still fixing typescript issue
-export default async function Items({ category, query }: {
-    category?: Category,
-    query?: string
-}) {
 
-    const items = await itemFetcher(category, query)
-    if (!items) return <div>Empty</div>
+// Is there a way to render this on the server side initally AND THEN
+// have it sit on the client side for queries? Something to look into later
+export default function Items({ category }: {
+    category?: Category,
+    // query?: string
+}) {
+    const [items, setItems] = useState([] as Item[])
+    const { searchQuery } = useQuery()
+    
+    useEffect(() => {
+
+       (async () => {
+        const result = await itemFetcher(category, searchQuery)
+        if (result) setItems(result)
+       })()
+
+    }, [searchQuery])
+
+    if (items.length === 0) return <div>Empty</div>
 
     return (
         <div>
