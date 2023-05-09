@@ -1,15 +1,9 @@
-import { SignIn, SignOut } from "./components/AuthButtons/AuthButtons"
+import { SignIn, SignOut } from "./components/Auth/AuthButtons"
 import Form from "./components/Form/Form"
 import Image from "next/image"
-import itemFetcher from "@/lib/fetchers/itemFetcher"
-import { getServerSession } from "next-auth"
 
 export default async function Home() {
-  const items = await itemFetcher('headwear', 'be')
-  if (!items) {
-    console.log('fail')
-    return
-  }
+
   return (
     <main>
       <SignIn />
@@ -24,11 +18,6 @@ export default async function Home() {
           objectFit: 'cover'
         }}
       />
-      <pre style={{
-        whiteSpace: 'pre-wrap'
-      }}>
-        {JSON.stringify(items)}
-      </pre>
     </main>
   )
 }

@@ -36,11 +36,8 @@ type Item = {
     price: number,
     category: Category,
     colors: {
-        id: string,
-        name: string,
-        url: string,
-        itemsId: string,
-    } 
+        [key: string]: string
+    }
 }
 
 type ToastType = 'info' | 'success' | 'warn' | 'error' | ''
@@ -56,5 +53,15 @@ type CartState = {
 type CartAction =  {
     addToCart: (itemId: string) => void,
     removeFromCart: (itemId: string) => void,
-    resetCart: () => void
+    resetCart: () => void,
+    setInitial: (itemIds: string[]) => void
+}
+
+type SessionData = {
+    user: {
+        name: string,
+        email: Email,
+        id: string,
+        itemIds: string[]
+    }
 }
