@@ -31,7 +31,7 @@ export default function Items({ category }: {
 
     return (
         <div>
-            {items.map(item => (
+            {items.map((item) => (
                 <ItemCard key={item.id} item={item} />
             ))}
         </div>
