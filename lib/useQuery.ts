@@ -4,7 +4,7 @@ import { create } from 'zustand'
 const useQuery = create<QueryState & QueryAction>()((set) => ({
     initialQuery: '',
     searchQuery: '',
-    handleChange: (e) => set({ initialQuery: e.target.value }),
+    handleInitial: (e) => set({ initialQuery: e.target.value }),
     handleSearch: () => set((state) => ({ searchQuery: state.initialQuery }))
 }))
 

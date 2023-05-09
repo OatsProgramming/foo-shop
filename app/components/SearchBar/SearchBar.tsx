@@ -3,11 +3,11 @@
 import useQuery from "@/lib/useQuery"
 
 export default function SearchBar() {
-    const { initialQuery, handleChange, handleSearch } = useQuery()
+    const { initialQuery, handleInitial, handleSearch } = useQuery()
 
     return (
         <div>
-            <input value={initialQuery} placeholder="Doggo jacket..." onChange={handleChange} />
+            <input value={initialQuery} placeholder="Doggo jacket..." onChange={handleInitial} />
             <div 
             onPointerDown={handleSearch}
             style={{

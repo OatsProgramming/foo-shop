@@ -72,6 +72,6 @@ type QueryState = {
 }
 
 type QueryAction = {
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleInitial: (e: React.ChangeEvent<HTMLInputElement>) => void
     handleSearch: () => void
 }
