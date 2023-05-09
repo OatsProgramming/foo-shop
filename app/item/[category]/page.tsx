@@ -1,12 +1,14 @@
-import itemFetcher from "@/lib/fetchers/itemFetcher"
+import Items from "@/app/components/Items/Items"
 
-export default async function Page({ params: { category } } : { 
+export default function Page({ params: { category } } : { 
     params: {
         category: Category
     }
 }) {
-    const items = await itemFetcher(category, )
     return (
-        <></>
+        <>
+            {/* @ts-expect-error Async Server Component */}
+            <Items category={category}/>
+        </>
     )
 }
