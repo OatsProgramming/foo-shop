@@ -1,7 +1,7 @@
 'use client'
 
 import itemFetcher from "@/lib/fetchers/itemFetcher"
-import ItemCard from "./ItemCard/ItemCard"
+import Item from "./Item/Item"
 import useQuery from "@/lib/useQuery"
 import { useEffect, useState } from "react"
 
@@ -32,7 +32,7 @@ export default function Items({ category }: {
     return (
         <div>
             {items.map((item) => (
-                <ItemCard key={item.id} item={item} />
+                <Item key={item.id} item={item} />
             ))}
         </div>
     )

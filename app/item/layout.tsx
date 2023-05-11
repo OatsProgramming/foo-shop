@@ -15,9 +15,8 @@ export default async function Layout({ children }: {
                 {/* 
                     If user does full refresh (i.e. either tinkering w/ url or actual refresh)
                     then state will also refresh. It will not persist.
+                    Edit: can use zustand/middleware to help state persist
                 */}
-                <Link href={'/item/headwear'}>Headwear</Link>
-                <Link href={'/item'}>Item</Link>
                 <SearchBar />
                 <Cart session={session}/>
             </nav>
