@@ -6,8 +6,6 @@ export default async function Home() {
 
   return (
     <main>
-      <SignIn />
-      <SignOut />
       <Form method="POST"/>
       <Image 
         src="https://i.imgur.com/VW57Cg1.jpg"

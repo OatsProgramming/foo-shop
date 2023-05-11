@@ -1,4 +1,4 @@
-export default async function notify(message: string, type: ToastNotif) {
+export default async function notify(message: string, type: ToastType) {
     let toast = await import('@/lib/toasts/toast').then(mod => mod.default)
     return toast[type](message, {
         position: "bottom-center",

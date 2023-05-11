@@ -3,7 +3,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import 'react-toastify/dist/ReactToastify.css';
 import { authOptions } from './api/auth/[...nextauth]/route';
-import AuthProvider from './components/Auth/AuthProvider';
+import { SignIn, SignOut } from './components/Auth/AuthButtons';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,14 +26,20 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <SignIn />
+        <SignOut />
+        <Link href="/item">
+          Item
+        </Link>
+        <Link href='/'>
+          Home
+        </Link>
         <pre style={{
           whiteSpace: 'pre-wrap'
         }}>
           {JSON.stringify(session)}
         </pre>
-        <AuthProvider>
           {children}
-        </AuthProvider>
       </body>
     </html>
   )
