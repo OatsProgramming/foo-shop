@@ -8,15 +8,20 @@ import userFetcher from "@/lib/fetchers/userFetcher";
 import { signIn, signOut } from 'next-auth/react'
 import notify from "@/lib/toasts/notify";
 import useCart from "@/lib/useCart";
+import { SignOut } from "../Auth/AuthButtons";
+import useHref from "@/lib/useHref";
+import { useRouter } from "next/navigation";
 
 export default function Form({ method }: {
     method: HTTP
 }) {
     // Just in case if user already has something in the cart and THEN wanted to sign up
-    const cart = useCart((state) => state.cart)
+    const { cart } = useCart()
 
     const [user, setUser] = useState({} as User)
     const [newInfo, setNewInfo] = useState({} as User)
+    const { signedInHere, resetHref } = useHref()
+    const router = useRouter()
        
     function handleChange(mutateUser: UserPartial) {
         setUser({
@@ -41,6 +46,7 @@ export default function Form({ method }: {
                 // Check to see if user is "writing" data
                 if ((method !== 'GET')) {
                     // Create user
+                    // Adding cart just in case if user was already shopping
                     const res = await userFetcher(method, {...user, cart}, newInfo)
 
                     // Let the user know the status
@@ -57,9 +63,12 @@ export default function Form({ method }: {
                 )
                 if (!result) notify("Invalid log in. Please try again.", 'error')
             } else {
+                // Sign out ( look at AuthButtons.tsx for detailed reasons why the options are set )
+                await signOut({ redirect: false, callbackUrl: signedInHere })
                 // Delete user data
-                signOut()
                 userFetcher(method, user)
+                resetHref()
+                router.refresh()
             }
         } catch (error) {
             console.error(error)
@@ -129,9 +138,6 @@ export default function Form({ method }: {
                     }
                 </button>
             </form>
-            <button onClick={() => signOut()}>
-                Sign out
-            </button>
             <ToastContainer
                 position="bottom-center"
                 autoClose={5000}
