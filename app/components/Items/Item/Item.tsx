@@ -1,7 +1,9 @@
 'use client'
 
 import useCart from "@/lib/globalStates/useCart"
+import isEqual from "lodash/isEqual"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 export default function Item({ item }: {
     item: Item
@@ -23,9 +25,10 @@ function ItemCard({ item, color }: {
     item: Item,
     color: string
 }) {
+    // Convert item data to CartItem data structure for database
+    const asCartItem: CartItem = { itemId: item.id, color } 
     const { cart, addToCart, removeFromCart } = useCart()
-    const isInCart = (!!cart.find(({ itemId, color: c }) => (item.id === itemId) && (c === color)))
-
+    const amntInCart = cart.filter(cartItem => isEqual(cartItem, asCartItem))
     return (
         <div>
             <h1>{color}</h1>
@@ -38,11 +41,20 @@ function ItemCard({ item, color }: {
                     objectFit: 'contain'
                 }}
             />
-            <button onClick={() =>
-                isInCart ? removeFromCart({ itemId: item.id, color }) : addToCart({ itemId: item.id, color })
-            }>
-                {isInCart ? 'Remove from cart' : 'Add to cart'}
-            </button>
+            <div>
+                <button onClick={() => 
+                    removeFromCart(asCartItem)
+                }>
+                        REMOVE
+                </button>
+                <span>{amntInCart.length}</span>
+                <button
+                onClick={() => 
+                    addToCart(asCartItem)
+                }>
+                    ADD
+                </button>
+            </div>
         </div>
     )
 }

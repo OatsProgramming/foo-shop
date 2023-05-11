@@ -1,8 +1,13 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/route"
-import Cart from "../components/Cart/Cart"
 import SearchBar from "../components/SearchBar/SearchBar"
-import Link from "next/link"
+import dynamic from "next/dynamic"
+
+// Prevent hydration error (server-client mismatch)
+const Cart = dynamic(() => 
+    import("../components/Cart/Cart"),
+    { ssr: false }
+)
 
 export default async function Layout({ children }: {
     children: React.ReactNode

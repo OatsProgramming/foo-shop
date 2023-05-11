@@ -28,7 +28,7 @@ export function SignIn() {
 }
 
 export function SignOut() {
-    const { cart } = useCart()
+    const { cart, resetCart } = useCart()
     const router = useRouter()
     const { signedInHere } = useHref()
 
@@ -48,6 +48,8 @@ export function SignOut() {
             // Check SignIn() or useHref.ts for detailed notes as to why the options has been set
             // redirect to false to prevent full refresh
             await signOut({ redirect: false, callbackUrl: signedInHere })
+            resetCart()
+            
             // router.refresh() to only refresh the necessary parts of the page
             router.refresh()
 

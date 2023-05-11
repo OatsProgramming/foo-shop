@@ -9,10 +9,7 @@ export default function Cart({ session }: {
     const { cart, setInitial } = useCart()
 
     // Added useEffect to avoid infinite renders
-    useEffect(() => {
-        if (session) setInitial(session.user.items)
-
-    }, [session])
+    useEffect(() => session && setInitial(session.user.items), [session])
 
     return (
         <div>
