@@ -66,7 +66,7 @@ export const authOptions: NextAuthOptions = {
                         id: user.id,
                         name: user.name,
                         email: user.email,
-                        itemIds: user.itemIds,
+                        items: user.items,
                     }
 
                 } catch (err) {
@@ -86,7 +86,7 @@ export const authOptions: NextAuthOptions = {
                 user: {
                     ...session.user,
                     id: token.id,
-                    itemIds: token.itemIds
+                    items: token.items
                 }
             }
         },
@@ -104,7 +104,7 @@ export const authOptions: NextAuthOptions = {
     // Weird as it's supposed to be default... 
     session: {
         strategy: 'jwt'
-    }
+    },
     // pages: {
     //     signIn: '/'
     // }

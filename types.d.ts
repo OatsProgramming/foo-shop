@@ -40,21 +40,27 @@ type Item = {
     }
 }
 
-type ToastType = 'info' | 'success' | 'warn' | 'error' | ''
+type ToastType = 'info' | 'success' | 'warn' | 'error' 
 
 type ToastParams = {
     message: string,
     type: ToastType
 }
 
-type CartState = {
-    cart: string[]
+type CartItem = {
+    itemId: string
+    color: string
 }
+
+type CartState = {
+    cart: CartItem[]
+}
+
 type CartAction =  {
-    addToCart: (itemId: string) => void,
-    removeFromCart: (itemId: string) => void,
+    addToCart: (item: CartItem) => void,
+    removeFromCart: (item: CartItem) => void,
     resetCart: () => void,
-    setInitial: (itemIds: string[]) => void
+    setInitial: (items: CartItem[]) => void
 }
 
 type SessionData = {
@@ -62,7 +68,7 @@ type SessionData = {
         name: string,
         email: Email,
         id: string,
-        itemIds: string[]
+        items: CartItem[]
     }
 }
 
@@ -74,4 +80,13 @@ type QueryState = {
 type QueryAction = {
     handleInitial: (e: React.ChangeEvent<HTMLInputElement>) => void
     handleSearch: () => void
+}
+
+type HrefState = {
+    signedInHere: string
+}
+
+type HrefAction = {
+    setSignedInHere: (href: string) => void,
+    resetHref: () => void
 }

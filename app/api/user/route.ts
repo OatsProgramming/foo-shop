@@ -4,7 +4,7 @@ import { compare, hash } from "bcrypt"
 export async function POST(req: Request) {
     try {
         // Extract data from body
-        const { username, email, password, cart: itemIds }: (User & Partial<CartState>) = await req.json()
+        const { username, email, password, cart: items }: (User & Partial<CartState>) = await req.json()
 
         // Check if user exists already
         const userExists = await prismadb.user.findFirst({
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
         // Create user in the db
         const user = await prismadb.user.create({
-            data: { name: username, email, hashedPassword, itemIds }
+            data: { name: username, email, hashedPassword, items }
         })
     
         return new Response(JSON.stringify(user), { status: 200 })

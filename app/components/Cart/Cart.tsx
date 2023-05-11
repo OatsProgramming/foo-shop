@@ -11,7 +11,7 @@ export default function Cart({ session }: {
     // Added useEffect to avoid infinite renders
     useEffect(() => {
         if (session) {
-           setInitial(session.user.itemIds) 
+            setInitial(session.user.items)
         }
     }, [session])
 
