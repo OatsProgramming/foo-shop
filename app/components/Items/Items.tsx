@@ -2,7 +2,7 @@
 
 import itemFetcher from "@/lib/fetchers/itemFetcher"
 import Item from "./Item/Item"
-import useQuery from "@/lib/useQuery"
+import useQuery from "@/lib/globalStates/useQuery"
 import { useEffect, useState } from "react"
 
 // When using custom async server components, be sure to add this
@@ -17,13 +17,13 @@ export default function Items({ category }: {
 }) {
     const [items, setItems] = useState([] as Item[])
     const { searchQuery } = useQuery()
-    
+
     useEffect(() => {
 
-       (async () => {
-        const result = await itemFetcher(category, searchQuery)
-        if (result) setItems(result)
-       })()
+        (async () => {
+            const result = await itemFetcher(category, searchQuery)
+            if (result) setItems(result)
+        })()
 
     }, [searchQuery])
 

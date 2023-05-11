@@ -7,9 +7,9 @@ import ToastContainer from '@/lib/toasts/ToastContainer'
 import userFetcher from "@/lib/fetchers/userFetcher";
 import { signIn, signOut } from 'next-auth/react'
 import notify from "@/lib/toasts/notify";
-import useCart from "@/lib/useCart";
+import useCart from "@/lib/globalStates/useCart";
 import { SignOut } from "../Auth/AuthButtons";
-import useHref from "@/lib/useHref";
+import useHref from "@/lib/globalStates/useHref";
 import { useRouter } from "next/navigation";
 
 export default function Form({ method }: {
@@ -22,7 +22,7 @@ export default function Form({ method }: {
     const [newInfo, setNewInfo] = useState({} as User)
     const { signedInHere, resetHref } = useHref()
     const router = useRouter()
-       
+
     function handleChange(mutateUser: UserPartial) {
         setUser({
             ...user,
@@ -47,7 +47,7 @@ export default function Form({ method }: {
                 if ((method !== 'GET')) {
                     // Create user
                     // Adding cart just in case if user was already shopping
-                    const res = await userFetcher(method, {...user, cart}, newInfo)
+                    const res = await userFetcher(method, { ...user, cart }, newInfo)
 
                     // Let the user know the status
                     notify(res.message, res.type)
@@ -57,7 +57,7 @@ export default function Form({ method }: {
                 }
 
                 const result = await signIn(
-                    'credentials', 
+                    'credentials',
                     // Sign in with new credentials if given
                     method === 'PATCH' ? newInfo : user
                 )
@@ -132,9 +132,9 @@ export default function Form({ method }: {
                 <button>
                     {
                         method === 'GET' ? 'Sign In' :
-                        method === 'POST' ? 'Create User' :
-                        method === 'PATCH' ? 'Update User' :
-                        'Delete User'
+                            method === 'POST' ? 'Create User' :
+                                method === 'PATCH' ? 'Update User' :
+                                    'Delete User'
                     }
                 </button>
             </form>

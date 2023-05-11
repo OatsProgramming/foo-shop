@@ -4,14 +4,14 @@ import prismadb from "@/lib/prismadb";
 
 export async function PATCH(req: Request) {
     const session = await getServerSession(authOptions)
-    if (!session) return new Response("You don't have access to this", { status: 401 })
+    if (!session) return new Response("Unauthorized user", { status: 401 })
 
     try {
         const cart = await req.json()
 
         await prismadb.user.update({
             where: {
-                email: ''
+                email: session.user?.email!
             },
             data: {
                 items: cart

@@ -1,10 +1,10 @@
 'use client'
 
-import useCart from '@/lib/useCart'
+import useCart from '@/lib/globalStates/useCart'
 import { signIn } from 'next-auth/react'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import useHref from '@/lib/useHref'
+import useHref from '@/lib/globalStates/useHref'
 
 export function SignIn() {
     const { setSignedInHere, resetHref } = useHref()
@@ -27,7 +27,7 @@ export function SignIn() {
     )
 }
 
-export function SignOut(){
+export function SignOut() {
     const { cart } = useCart()
     const router = useRouter()
     const { signedInHere } = useHref()
@@ -37,7 +37,7 @@ export function SignOut(){
             // Don't do anything if the user hasn't signed in
             // Lower the writes to db
             if (!signedInHere) return
-            
+
             await fetch('api/cart', {
                 method: 'PATCH',
                 headers: {
@@ -50,7 +50,7 @@ export function SignOut(){
             await signOut({ redirect: false, callbackUrl: signedInHere })
             // router.refresh() to only refresh the necessary parts of the page
             router.refresh()
-        
+
         } catch (err) {
             console.error(err)
         }

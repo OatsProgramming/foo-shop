@@ -18,7 +18,7 @@ const useCart = create<CartState & CartAction>()(
         {
             name: 'items-storage',
             // Only care about cart state to persist
-            partialize: (state) => ({ cart: state.cart })
+            partialize: (state) => ({ cart: state.cart }),
         }
     )
 )

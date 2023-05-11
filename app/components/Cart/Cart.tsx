@@ -1,6 +1,6 @@
 'use client'
 
-import useCart from "@/lib/useCart"
+import useCart from "@/lib/globalStates/useCart"
 import { useEffect } from "react"
 
 export default function Cart({ session }: {
@@ -10,9 +10,8 @@ export default function Cart({ session }: {
 
     // Added useEffect to avoid infinite renders
     useEffect(() => {
-        if (session) {
-            setInitial(session.user.items)
-        }
+        if (session) setInitial(session.user.items)
+
     }, [session])
 
     return (

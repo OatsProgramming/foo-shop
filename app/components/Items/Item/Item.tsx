@@ -1,6 +1,6 @@
 'use client'
 
-import useCart from "@/lib/useCart"
+import useCart from "@/lib/globalStates/useCart"
 import Image from "next/image"
 
 export default function Item({ item }: {
@@ -13,7 +13,7 @@ export default function Item({ item }: {
     return (
         <div>
             {colors.map(color => (
-                <ItemCard key={item.title + item.colors[color]} item={item} color={color}/>
+                <ItemCard key={item.title + item.colors[color]} item={item} color={color} />
             ))}
         </div>
     )
@@ -29,7 +29,7 @@ function ItemCard({ item, color }: {
     return (
         <div>
             <h1>{color}</h1>
-            <Image 
+            <Image
                 src={item.colors[color]}
                 alt={`${item.title} ${color}`}
                 width={300}
@@ -38,8 +38,8 @@ function ItemCard({ item, color }: {
                     objectFit: 'contain'
                 }}
             />
-            <button onClick={() => 
-                isInCart ? removeFromCart({ itemId: item.id, color}) : addToCart({ itemId: item.id, color })
+            <button onClick={() =>
+                isInCart ? removeFromCart({ itemId: item.id, color }) : addToCart({ itemId: item.id, color })
             }>
                 {isInCart ? 'Remove from cart' : 'Add to cart'}
             </button>
